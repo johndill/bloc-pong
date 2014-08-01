@@ -6,7 +6,7 @@ My own version of the classic game, [Pong](http://en.wikipedia.org/wiki/Pong).
 
 ## Use case
 
-JavaScript is used for serious business all over the Internet, but it can also be used for pure fun! JavaScript can be used to develop all types of games, including our own [Ruby Warrior](https://www.bloc.io/ruby-warrior). It's important to solve problems as a web developer, but it's also OK to have a good time. This project is strictly about creating fun.
+JavaScript is used for serious business all over the Internet, but it can also be used for pure fun! JavaScript can be used to develop all types of games, including Bloc's own [Ruby Warrior](https://www.bloc.io/ruby-warrior). It's important to solve problems as a web developer, but it's also OK to have a good time. This project is strictly about creating fun.
 
 ## Requirements
 
