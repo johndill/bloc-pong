@@ -1,0 +1,9 @@
+{
+  "firebase": "dill-bloc-pong",
+  "public": "dist",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}
