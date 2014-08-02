@@ -5,8 +5,8 @@
   box-shadow: 0 9px 20px -5px rgba(0,0,0,0.8);
 }
 
-.pong-table.mouseDown:hover {
-	cursor:	default;
+.pong-table-container canvas {
+	display: inline;
 }
 
 .main h1 {
@@ -15,4 +15,6 @@
 	margin-bottom: 0;
 	padding-top: 0;
 	padding-bottom: 0;
+	padding-left: .1em;
 }
+
