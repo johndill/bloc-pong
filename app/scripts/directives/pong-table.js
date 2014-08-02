@@ -3,78 +3,91 @@
 angular.module('blocPongApp')
   .directive('pongTable',
   	function () {
+  		var animate = window.requestAnimationFrame ||
+  			window.webkitRequestAnimationFrame ||
+  			window.mosRequestAnimationFrame ||
+  			function (callback) { window.setTimeout(callback, 1000/60) };
+
+  		// paddle
+  		function Paddle(x, y, width, height) {
+  			this.x = x;
+  			this.y = y;
+  			this.width = width;
+  			this.height = height;
+  			this.x_speed = 0;
+  			this.y_speed = 0;
+  		}
+
+  		Paddle.prototype.render = function(context) {
+  			context.fillStyle = '#0000FF';
+  			context.fillRect(this.x, this.y, this.width, this.height);
+  		};
+
+  		// player
+  		function Player() {
+  			this.paddle = new Paddle(580, 175, 10, 50);
+  		}
+
+  		Player.prototype.render = function(context) {
+  			this.paddle.render(context);
+  		};
+
+  		// computer
+  		function Computer() {
+  			this.paddle = new Paddle(10, 175, 10, 50);
+  		}
+
+  		Computer.prototype.render = function(context) {
+  			this.paddle.render(context);
+  		};
+
+  		// ball
+  		function Ball(x, y) {
+  			this.x = x;
+  			this.y = y;
+  			this.x_speed = 3;
+  			this.y_speed = 0;
+  			this.radius = 5;
+  		}
+
+  		Ball.prototype.render = function(context) {
+  			context.beginPath();
+  			context.arc(this.x, this.y, this.radius, 2* Math.PI, false);
+  			context.fillStyle = '#000000';
+  			context.fill();
+  		};
+
+  		var player = new Player();
+  		var computer = new Computer();
+  		var ball = new Ball(300, 200);
+
 	    return {
 	    	restrict: 'A',
 	    	link: function(scope, element) {
-	    		var ctx = element[0].getContext('2d');
+	    		var context = element[0].getContext('2d');
 
-	    		// variable that decides if something should be drawn on canvas
-	    		var drawing = false;
+	    		var step = function() {
+	    			update();
+	    			render();
+	    			animate(step);
+	    		};
 
-	    		// current and previous x and y coords
-	    		var lastX, lastY, currentX, currentY;
+	    		var update = function() {
 
-	    		element.bind('mousedown', function(e) {
-	    			if (e.offsetX !== undefined) {
-	    				lastX = e.offsetX;
-	    				lastY = e.offsetY;
-	    			} 
-	    			else {
-	    				lastX = e.layerX - e.currentTarget.offsetLeft;
-	    				lastY = e.layerY - e.currentTarget.offsetTop;
-	    			}
+	    		};
 
-	    			// begins new line
-	    			ctx.beginPath();
+	    		var render = function() {
+	    			context.fillStyle = '#FF00FF';
+	    			context.fillRect(0, 0, element.prop('width'), element.prop('height'));
+	    			player.render(context);
+	    			computer.render(context);
+	    			ball.render(context);
+	    		};
 
-	    			drawing = true;
-	    		});
 
-	    		element.bind('mousemove', function(e) {
-	    			if (drawing) {
-	    				// get current mouse position
-	    				if (e.offsetX !== undefined) {
-	    					currentX = e.offsetX;
-	    					currentY = e.offsetY;
-	    				}
-	    				else {
-	    					currentX = e.layerX - e.currentTarget.offsetLeft;
-	    					currentY = e.layerY - e.currentTarget.offsetTop;
-	    				}
 
-	    				draw(lastX, lastY, currentX, currentY);
-
-	    				// set last coords to current
-	    				lastX = currentX;
-	    				lastY = currentY;
-	    			}
-	    		});
-
-	    		element.bind('mouseup', function() {
-	    			// stop drawing
-	    			drawing = false;
-	    		});
-
-	    		element.bind('dblclick', function() {
-	    			reset();
-	    			return false;
-	    		});
-
-	    		// reset canvas
-	    		function reset() {
-	    			element[0].width = element[0].width;
-	    		}
-
-	    		function draw(lX, lY, cX, cY) {
-	    			// line from
-	    			ctx.moveTo(lX, lY);
-	    			// to
-	    			ctx.lineTo(cX, cY);
-	    			// color
-	    			ctx.strokeStyle = '#4bf';
-	    			// draw line
-	    			ctx.stroke();
-	    		}
+	    		// start animation loop
+	    		animate(step);
 	    	}
 	    };
 	  }
