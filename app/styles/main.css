@@ -1,5 +1,6 @@
 .pong-table {
   box-shadow: 0 9px 20px -5px rgba(0,0,0,0.8);
+  background-color: #fff;
 }
 
 .pong-table-container canvas {
