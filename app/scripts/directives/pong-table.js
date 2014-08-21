@@ -46,7 +46,8 @@ angular.module('blocPongApp')
             constrain: args.constrain || { x: false, y: false },
             fixed: args.fixed || false,
             name: args.name || 'pong-node',
-            bounds: function() { return bounds(this); }
+            bounds: function() { return bounds(this); },
+            fillColor: '#ddd'
           };
         },
         plusOrMinus = function() {
@@ -59,7 +60,8 @@ angular.module('blocPongApp')
           py: height / 2 + parseInt(Math.random()*15, 10)-7,
           rx: unit.width / 2,
           ry: unit.height / 2,
-          name: 'ball'
+          name: 'ball',
+          fillColor: '#bbb'
         }),
         leftPaddle = new PongNode({
           x: unit.width,
@@ -79,14 +81,14 @@ angular.module('blocPongApp')
           px: width - unit.width,
           py: height / 2,
           constrain: { x: width - unit.width, y: false },
-          //fixed: true,
+          fixed: true,
           name: 'rightPaddle'
         });
 
       ball.init = function() {
         this.x = width / 2;
         this.y = height / 2;
-        this.px = width / 2 + plusOrMinus() * unit.width / 2;
+        this.px = width / 2 + plusOrMinus() * unit.width / 4;
         this.py = height / 2 + plusOrMinus() * parseInt(Math.random()*5);
       };
 
@@ -121,7 +123,7 @@ angular.module('blocPongApp')
         .attr('height', function(d) { return d.height; })
         .attr('rx', function(d) { return d.rx; })
         .attr('ry', function(d) { return d.ry; })
-        .style('fill', function(d, i) { return color(i % 5); })
+        .style('fill', function(d, i) { return d.fillColor; }) //color(i % 5); })
         .attr('class', function(d) { return d.name; });
 
       // add drag behavior to right paddle
@@ -179,9 +181,9 @@ angular.module('blocPongApp')
         // ball hits left paddle
         if (ball.bounds().left < leftPaddle.bounds().right) {
           dy = ball.y - leftPaddle.y;
-          max = leftPaddle.bounds().top + ball.height / 2;
+          max = leftPaddle.height / 2 + ball.height / 2;
           if (Math.abs(dy) <= max) {
-            ball.px = ball.x - unit.width / 2;
+            ball.px = ball.x - unit.width / 4;
             ball.py = ball.y - dy / max * unit.height;
             force.resume();
           }
@@ -190,9 +192,9 @@ angular.module('blocPongApp')
         // ball hits right paddle
         if (ball.bounds().right > rightPaddle.bounds().left) {
           dy = ball.y - rightPaddle.y;
-          max = rightPaddle.bounds().top + ball.height / 2;
+          max = rightPaddle.height / 2 + ball.height / 2;
           if (Math.abs(dy) <= max) {
-            ball.px = ball.x + unit.width / 2;
+            ball.px = ball.x + unit.width / 4;
             ball.py = ball.y - dy / max * unit.height;
             force.resume();
           }
@@ -205,11 +207,9 @@ angular.module('blocPongApp')
         }
         
         // score - ball hits left or right wall
-        if (ball.bounds().left < 0) {
+        if (ball.bounds().left < 0 || ball.bounds().right > width) {
           ball.init();
-        }
-        if (ball.bounds().right > width) {
-          ball.init();
+          force.resume();
         }
         
       }
