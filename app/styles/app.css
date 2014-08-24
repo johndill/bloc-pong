@@ -1,0 +1,37 @@
+@import url("login.css");
+
+@font-face {
+    font-family: 'console85';
+    src: url('../fonts/console85mono-webfont.eot');
+    src: url('../fonts/console85mono-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/console85mono-webfont.woff') format('woff'),
+         url('../fonts/console85mono-webfont.ttf') format('truetype'),
+         url('../fonts/console85mono-webfont.svg#console85monomedium') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+  background-color: #ddd;
+  font-family: 'console85';
+}
+
+.game-area {
+  background-color: #fff;
+  max-width: 600px;
+}
+
+.game-title {
+  font-size: 55px;
+}
+
+.game-header {
+  background-color: black;
+  color: white;
+}
+
+.unselectable {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
