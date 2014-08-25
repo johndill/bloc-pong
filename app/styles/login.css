@@ -1,0 +1,36 @@
+.login-message {
+  color: white;
+  background-color: red;
+  font-size: 20px;
+  padding: 15px;
+}
+
+.form-signin {
+  max-width: 500px;
+  padding: 15px;
+  margin: auto;
+  background-color: #fff;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 20px;
+  height: auto;
+  padding: 10px;
+}
+.form-signin label {
+    font-size: 20px;
+}
+.form-signin input {
+  color: white;
+  background-color: black;
+  border-radius: 0;
+  font-family: arial,helvetica,sans-serif;
+}
+.form-signin input[name="password"] {
+  margin-bottom: 20px;
+}
+.form-signin .btn-inverse {
+  color: white;
+  background-color: black;
+  border-radius: 0;
+}
