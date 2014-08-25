@@ -16,6 +16,10 @@ body {
   font-family: 'console85';
 }
 
+.main {
+  padding: 0;
+}
+
 .game-area {
   background-color: #fff;
   max-width: 600px;

@@ -2,15 +2,18 @@
     <div class='row game-header text-center'>
         <span class='game-title'>BLOC PONG</span>
     </div>
+    <div class='row' data-ng-show='loginError!==""' data-ng-click='loginError=""'>
+      <p class='login-message'>{{ loginError }}</p>
+    </div>
     <div class='row game-body'>
       <form class="form-signin">
-        <label for="username">USERNAME</label>
-        <input type="text" class="form-control" name="username" placeholder="USERNAME" required="" autofocus="" />
+        <label for="username">EMAIL</label>
+        <input type="email" class="form-control" name="username" placeholder="EMAIL" required="" autofocus="" data-ng-model="email" />
         <br />
         <label for="password">PASSWORD</label>
-        <input type="password" class="form-control" name="password" placeholder="PASSWORD" required=""/>
-        <button class="btn btn-lg btn-inverse" type="submit">SIGN UP</button>
-        <button class="btn btn-lg btn-inverse pull-right" type="submit">LOG IN</button>
+        <input type="password" class="form-control" name="password" placeholder="PASSWORD" required="" data-ng-model="password" />
+        <button class="btn btn-lg btn-inverse" type="submit" data-ng-click="signup()">SIGN UP</button>
+        <button class="btn btn-lg btn-inverse pull-right" type="submit" data-ng-click="login()">LOG IN</button>
     </form>
     </div>
 </div>
