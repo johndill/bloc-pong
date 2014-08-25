@@ -3,23 +3,40 @@
 /*global Firebase */
 
 angular.module('blocPongApp')
-  .controller('LoginCtrl', ['$scope', 'simpleLogin', '$rootScope',
-		function ($scope, simpleLogin, $rootScope) {
+  .controller('LoginCtrl', ['$scope', 'simpleLogin',
+		function ($scope, simpleLogin) {
+
 			$scope.loginError = '';
 
 			// sign up
 			$scope.signup = function() {
-				console.log($scope.email + ', ' + $scope.password);
-				var res = simpleLogin.createAccount($scope.email, $scope.password);
-				console.log(simpleLogin.getUser().email);
+				simpleLogin.$createUser($scope.email, $scope.password)
+					.then(function(user) {
+						console.log(user);
+						$scope.loginError = '';
+					}, function(error) {
+						$scope.loginError = error.message.replace("FirebaseSimpleLogin: ","");
+					});
 			};
 
 			// sign in
 			$scope.login = function() {
-				console.log($scope.email + ', ' + $scope.password);
-				var res = simpleLogin.login($scope.email, $scope.password);
-				console.log(simpleLogin.getUser().email);
+				simpleLogin.$login('password', {
+					email: $scope.email, 
+					password: $scope.password
+				})
+				.then(
+					function(user) {
+						console.log(user);
+						$scope.loginError = '';
+					}, 
+					function(error) {
+						$scope.loginError = error.message.replace("FirebaseSimpleLogin: ","");
+						console.log(error);
+					}
+				);
 			};
+
 	  }
   ]);
 

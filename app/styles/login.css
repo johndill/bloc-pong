@@ -23,8 +23,8 @@
 .form-signin input {
   color: white;
   background-color: black;
-  text-transform: uppercase;
   border-radius: 0;
+  font-family: arial,helvetica,sans-serif;
 }
 .form-signin input[name="password"] {
   margin-bottom: 20px;
