@@ -1,10 +1,8 @@
 'use strict';
 
-/*global Firebase */
-
 angular.module('blocPongApp')
-  .controller('LoginCtrl', ['$scope', 'simpleLogin',
-		function ($scope, simpleLogin) {
+  .controller('LoginCtrl', ['$scope', 'simpleLogin', '$location',
+		function ($scope, simpleLogin, $location) {
 
 			$scope.loginError = '';
 
@@ -14,8 +12,9 @@ angular.module('blocPongApp')
 					.then(function(user) {
 						console.log(user);
 						$scope.loginError = '';
+						$location.path('menu');
 					}, function(error) {
-						$scope.loginError = error.message.replace("FirebaseSimpleLogin: ","");
+						$scope.loginError = error.message.replace('FirebaseSimpleLogin: ','');
 					});
 			};
 
@@ -29,9 +28,10 @@ angular.module('blocPongApp')
 					function(user) {
 						console.log(user);
 						$scope.loginError = '';
+						$location.path('menu');
 					}, 
 					function(error) {
-						$scope.loginError = error.message.replace("FirebaseSimpleLogin: ","");
+						$scope.loginError = error.message.replace('FirebaseSimpleLogin: ','');
 						console.log(error);
 					}
 				);

@@ -29,8 +29,3 @@
 .form-signin input[name="password"] {
   margin-bottom: 20px;
 }
-.form-signin .btn-inverse {
-  color: white;
-  background-color: black;
-  border-radius: 0;
-}
