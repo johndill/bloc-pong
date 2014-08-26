@@ -6,7 +6,7 @@ angular.module('blocPongApp')
   		var animate = window.requestAnimationFrame ||
   			window.webkitRequestAnimationFrame ||
   			window.mosRequestAnimationFrame ||
-  			function (callback) { window.setTimeout(callback, 1000/60) };
+  			function (callback) { window.setTimeout(callback, 1000/60); };
 
   		// paddle
   		function Paddle(x, y, width, height) {
@@ -14,8 +14,8 @@ angular.module('blocPongApp')
   			this.y = y;
   			this.width = width;
   			this.height = height;
-  			this.x_speed = 0;
-  			this.y_speed = 0;
+  			this.xSpeed = 0;
+  			this.ySpeed = 0;
   		}
 
   		Paddle.prototype.render = function(context) {
@@ -29,21 +29,21 @@ angular.module('blocPongApp')
   			// update speed and location
   			this.x += x;
   			this.y += y;
-  			this.x_speed = x;
-  			this.y_speed = y;
+  			this.xSpeed = x;
+  			this.ySpeed = y;
   			paddleTop = this.y;
   			paddleBottom = this.y + this.height;
 
   			// paddle at top
   			if (paddleTop < 0) {
   				this.y = 0;
-  				this.y_speed = 0;
+  				this.ySpeed = 0;
   			}
 
   			// paddle at bottom
   			if (paddleBottom > tableHeight) {
   				this.y = tableHeight - this.height;
-  				this.y_speed = 0;
+  				this.ySpeed = 0;
   			}
   		};
 
@@ -63,8 +63,8 @@ angular.module('blocPongApp')
   				value;
 
   			// paddle is not moving unless key is pressed
-  			this.paddle.x_speed = 0;
-  			this.paddle.y_speed = 0;
+  			this.paddle.xSpeed = 0;
+  			this.paddle.ySpeed = 0;
 
   			// move paddle if key is pressed
   			for (key in keysDown) {
@@ -105,14 +105,14 @@ angular.module('blocPongApp')
 
   			// move paddle
   			this.paddle.move(0, speed);
-  		}
+  		};
 
   		// ball
   		function Ball(x, y) {
   			this.x = x;
   			this.y = y;
-  			this.x_speed = 3;
-  			this.y_speed = 0;
+  			this.xSpeed = 3;
+  			this.ySpeed = 0;
   			this.radius = 5;
   		}
 
@@ -136,41 +136,41 @@ angular.module('blocPongApp')
   				rightPaddleFace = rightPaddle.x;
 
   			// update ball position
-  			this.x += this.x_speed;
-  			this.y += this.y_speed;
+  			this.x += this.xSpeed;
+  			this.y += this.ySpeed;
 
   			// check if hitting top
   			if (ballTop < 0) {
   				this.y = this.radius;
-  				this.y_speed = -this.y_speed;
+  				this.ySpeed = -this.ySpeed;
   			}
 
   			// check if hitting bottom
   			if (ballBottom > tableHeight) {
   				this.y = tableHeight - this.radius;
-  				this.y_speed = -this.y_speed;
+  				this.ySpeed = -this.ySpeed;
   			}
 
   			// check if hitting left or right wall (point scored)
   			if (ballLeft < 0 || ballRight > tableWidth) {
-  				this.x_speed = 3;
-  				this.y_speed = 0;
+  				this.xSpeed = 3;
+  				this.ySpeed = 0;
   				this.x = tableWidth / 2;
   				this.y = tableHeight / 2;
   			}
 
   			// check if left paddle was hit
   			else if (ballLeft < leftPaddleFace && this.y > leftPaddleTop && this.y < leftPaddleBottom) {
-  				this.x_speed = 3;
-  				this.y_speed += (leftPaddle.y_speed / 4);
-  				this.x += this.x_speed;
+  				this.xSpeed = 3;
+  				this.ySpeed += (leftPaddle.ySpeed / 4);
+  				this.x += this.xSpeed;
   			}
 
   			// check if right paddle was hit
   			else if (ballRight > rightPaddleFace && this.y > rightPaddleTop && this.y < rightPaddleBottom) {
-  				this.x_speed = -3;
-  				this.y_speed += (rightPaddle.y_speed / 4);
-  				this.x += this.x_speed;
+  				this.xSpeed = -3;
+  				this.ySpeed += (rightPaddle.ySpeed / 4);
+  				this.x += this.xSpeed;
   			}
 
   		};
@@ -193,7 +193,7 @@ angular.module('blocPongApp')
 	    	link: function(scope, element) {
 	    		var context = element[0].getContext('2d'),
 	    			width = element.prop('width'),
-	    			height = element.prop('height')
+	    			height = element.prop('height');
 	    		 
 	    		var step = function() {
 	    			update();
