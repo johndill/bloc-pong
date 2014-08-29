@@ -29,11 +29,23 @@ body {
 
 .game-title {
   font-size: 55px;
+  line-height: 50px;
 }
 
 .game-header {
   background-color: black;
   color: white;
+  padding-top: 13px;
+}
+
+.game-body {
+	font-size: 24px;
+	padding: 10px;
+	height: 350px;
+}
+
+.game-footer {
+	padding: 15px;
 }
 
 .game-footer-text {
@@ -44,6 +56,9 @@ body {
   color: white;
   background-color: black;
   border-radius: 0;
+  font-size: 20px;
+  line-height: 20px;
+  padding: 15px 10px 10px 10px;
 }
 
 .btn-inverse:hover {
