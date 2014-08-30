@@ -11,7 +11,7 @@
 /*global Firebase */
 
 angular.module('blocPongApp')
-  .controller('MainCtrl', ['$scope', '$firebase',
+  .controller('PlayCtrl', ['$scope', '$firebase',
   	function ($scope, $firebase) {
 	    var ref = new Firebase('https://dill-bloc-pong.firebaseio.com/');
 

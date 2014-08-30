@@ -25,7 +25,6 @@ angular.module('blocPongApp')
 					})
 					.then(function() {
 						$scope.login();
-						$location.path('menu');
 					});
 			};
 
@@ -43,19 +42,17 @@ angular.module('blocPongApp')
 						$rootScope.ref.child('users').child(user.uid).child('settings').on('value', function (snapshot) {
 							$rootScope.settings = snapshot.val();
 							console.log(snapshot.val());
-							$location.path('menu');
 						}, function (err) {
 							console.log('Error retrieving settings: '  + err.code + ' - ' + err.message);
-        			$rootScope.settings = { sound: 'on', difficulty: 'novice' };
-						});
+        					$rootScope.settings = { sound: 'on', difficulty: 'novice' };
+						});						
+						$location.path('menu');
 					}, 
 					function(error) {
 						$scope.loginError = error.message.replace('FirebaseSimpleLogin: ','');
 						console.log(error);
-					}
-				);
-			};
-
+					});
+	  	};
 	  }
   ]);
 
