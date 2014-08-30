@@ -1,6 +1,7 @@
 @import url("../styles/login.css");
 @import url("../styles/menu.css");
 @import url("../styles/about.css");
+@import url("../styles/settings.css");
 
 @font-face {
     font-family: 'console85';
@@ -52,8 +53,21 @@ body {
   font-size: 20px;
 }
 
+.btn-default {
+  border: none;
+  font-size: 20px;
+  line-height: 20px;
+  padding: 15px 10px 10px 10px;
+  background-color: #fff;
+}
+
+.btn-default:hover {
+  background-color: #fff;
+  border-color: #ddd;
+}
+
 .btn-inverse {
-  color: white;
+  color: #fff;
   background-color: black;
   border-radius: 0;
   font-size: 20px;
@@ -62,7 +76,7 @@ body {
 }
 
 .btn-inverse:hover {
-  color: white;
+  color: #fff;
 }
 
 .unselectable {

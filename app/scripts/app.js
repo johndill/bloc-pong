@@ -40,7 +40,12 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+			.when('/settings', {
+				templateUrl: 'views/settings.html',
+				controller: 'SettingsCtrl'
+			})
       .otherwise({
         redirectTo: '/'
       });
-  }]);
+  }])
+  .constant('firebaseUrl', 'https://dill-bloc-pong.firebaseio.com/');
