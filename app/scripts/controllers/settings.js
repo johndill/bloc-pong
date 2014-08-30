@@ -1,41 +1,54 @@
 'use strict';
 
-/*global Firebase */
-
 angular.module('blocPongApp')
-  .controller('SettingsCtrl', ['$scope', 'firebaseUrl', 'simpleLogin',
-    function ($scope, firebaseUrl, simpleLogin) {
-      console.log(simpleLogin);
-      var ref = new Firebase(firebaseUrl + 'users/' + simpleLogin.user.uid + '/settings');
-      
-      // set user to logged in user
-      $scope.user = simpleLogin.user;
-      
-      $scope.test = true;
+  .controller('SettingsCtrl', ['$scope', '$rootScope', 'simpleLogin', '$location',
+    function ($scope, $rootScope, simpleLogin, $location) {
+
+      // get settings for logged in user
+      $scope.settings = $rootScope.settings;
       
       $scope.toggleSound = function() {
         if ($scope.settings.sound === 'on') {
           $scope.settings.sound = 'off';
+          $rootScope.ref
+            .child('users')
+            .child(simpleLogin.user.uid)
+            .child('settings')
+            .child('sound')
+            .set('off');
+          $location.path('settings');
         } else {
           $scope.settings.sound = 'on';
+          $rootScope.ref
+            .child('users')
+            .child(simpleLogin.user.uid)
+            .child('settings')
+            .child('sound')
+            .set('on');
+          $location.path('settings');
         }
       };
       
       $scope.toggleDifficulty = function() {
         if ($scope.settings.difficulty === 'novice') {
           $scope.settings.difficulty = 'expert';
+          $rootScope.ref
+            .child('users')
+            .child(simpleLogin.user.uid)
+            .child('settings')
+            .child('difficulty')
+            .set('expert');
+          $location.path('settings');
         } else {
           $scope.settings.difficulty = 'novice';
+          $rootScope.ref
+            .child('users')
+            .child(simpleLogin.user.uid)
+            .child('settings')
+            .child('difficulty')
+            .set('novice');
+          $location.path('settings');
         }
       };
-      
-      // get settings for logged in user
-      ref.on('value', function(snapshot) {
-        $scope.settings = snapshot.val();
-        console.log($scope.settings.sound === 'on');
-      }, function(err) {
-        console.log('Error retrieving settings: '  + err.code + ' - ' + err.message);
-        $scope.settings = { sound: 'on', difficulty: 'novice' };
-      });
     }
   ]);

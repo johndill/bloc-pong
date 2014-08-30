@@ -48,4 +48,7 @@ angular
         redirectTo: '/'
       });
   }])
+  .config(['$locationProvider', function ($locationProvider) {
+    $locationProvider.html5Mode(false);
+  }])
   .constant('firebaseUrl', 'https://dill-bloc-pong.firebaseio.com/');
