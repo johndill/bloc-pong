@@ -51,4 +51,9 @@ angular
   .config(['$locationProvider', function ($locationProvider) {
     $locationProvider.html5Mode(false);
   }])
+  .run(['$rootScope', '$location', 'simpleLogin', function ($rootScope, $location, simpleLogin) {
+    $rootScope.$on('$routeChangeStart', function() {
+      if (!simpleLogin.user) { $location.path('login'); }
+    });
+  }])
   .constant('firebaseUrl', 'https://dill-bloc-pong.firebaseio.com/');
