@@ -11,6 +11,7 @@ angular.module('blocPongApp')
 
 			// sign up
 			$scope.signup = function() {
+				console.log('signup');
 				simpleLogin.$createUser($scope.email, $scope.password)
 					.then(function(user) {
 						$rootScope.ref.child('users').child(user.uid).set({
@@ -19,15 +20,18 @@ angular.module('blocPongApp')
 							difficulty: 'novice'
 						  }
 						});
-						$scope.loginError = '';
-						$scope.login();
 					}, function(error) {
 						$scope.loginError = error.message.replace('FirebaseSimpleLogin: ','');
+					})
+					.then(function() {
+						$scope.login();
+						$location.path('menu');
 					});
 			};
 
 			// sign in
 			$scope.login = function() {
+				console.log('login');
 				simpleLogin.$login('password', {
 					email: $scope.email, 
 					password: $scope.password
