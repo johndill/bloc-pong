@@ -3,9 +3,9 @@
 /*global Firebase */
 
 angular.module('blocPongApp')
-  .factory('simpleLogin', ['$firebaseSimpleLogin', 
-  	function($firebaseSimpleLogin) { 
-  		var ref = new Firebase('https://dill-bloc-pong.firebaseio.com/');
+  .factory('simpleLogin', ['$firebaseSimpleLogin', 'firebaseUrl',
+  	function($firebaseSimpleLogin, firebaseUrl) {
+      var ref = new Firebase(firebaseUrl);
   		return $firebaseSimpleLogin(ref);
   	}
   ]);

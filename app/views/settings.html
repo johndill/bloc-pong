@@ -1,0 +1,28 @@
+<div class='container game-area'>
+  <div class='row game-header text-center'>
+    <span class='game-title'>BLOC PONG</span>
+  </div>
+  <div class='row game-body'>
+    <div class='settings text-center'>
+      <div class=''>Sound:</div>
+      <div class='sound-toggle' data-ng-click='toggleSound()'>
+        <span class='btn btn-lg sound-on' 
+          data-ng-class='{"btn-inverse": settings.sound === "on", "btn-default": settings.sound === "off"}'>On</span>
+        <span class='btn btn-lg sound-off' 
+          data-ng-class='{"btn-inverse": settings.sound === "off", "btn-default": settings.sound === "on"}'>Off</span>
+      </div>
+      <br />
+      <div class=''>Difficulty:</div>
+      <div class='difficulty-toggle' data-ng-click='toggleDifficulty()'>
+        <span class='btn btn-lg difficulty-novice' 
+          data-ng-class='{"btn-inverse": settings.difficulty === "novice", "btn-default": settings.difficulty === "expert"}'>Novice</span>
+        <span class='btn btn-lg difficulty-expert' 
+          data-ng-class='{"btn-inverse": settings.difficulty === "expert", "btn-default": settings.difficulty === "novice"}'>Expert</span>
+      </div>
+  		<br />
+  		<p class='text-center'>
+      	<a class="btn btn-lg btn-inverse" data-ng-href="#/menu">MENU</a>
+  		</p>
+    </div>
+  </div>
+</div>
