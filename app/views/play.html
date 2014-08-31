@@ -1,6 +1,13 @@
-<div class="container main">
-  <h1 class='text-center'>{{ data.config.name }}</h1>
-  <div class='pong-table-container unselectable text-center'>
-  	<canvas data-pong-table='' class='pong-table' width='600', height='400'></canvas>
+<div class='container game-area'>
+  <div class='row game-header text-center'>
+  	<span class='score-left pull-left game-title'>0</span>
+  	<span class='game-controls'>
+  	<a href="#/menu">Quit</a>
+  	<a href="#">Pause</a>
+  	<span>
+  	<span class='score-right pull-right game-title'>0</span>
+  </div>
+  <div class='row play game-body'>
+    <canvas data-pong-table='' class='pong-table' width='600', height='350'></canvas>
   </div>
 </div>
