@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('blocPongApp')
-  .directive('pongTable',
-  	function () {
+  .directive('pongTable', ['$rootScope',
+  	function ($rootScope) {
   		var animate = window.requestAnimationFrame ||
   			window.webkitRequestAnimationFrame ||
   			window.mosRequestAnimationFrame ||
@@ -49,7 +49,7 @@ angular.module('blocPongApp')
 
   		// player
   		function Player() {
-  			this.paddle = new Paddle(580, 175, 10, 50);
+  			this.paddle = new Paddle(580, 150, 10, 50);
   		}
 
   		Player.prototype.render = function(context) {
@@ -80,7 +80,7 @@ angular.module('blocPongApp')
 
   		// computer
   		function Computer() {
-  			this.paddle = new Paddle(10, 175, 10, 50);
+  			this.paddle = new Paddle(10, 150, 10, 50);
   		}
 
   		Computer.prototype.render = function(context) {
@@ -151,13 +151,22 @@ angular.module('blocPongApp')
   				this.ySpeed = -this.ySpeed;
   			}
 
-  			// check if hitting left or right wall (point scored)
-  			if (ballLeft < 0 || ballRight > tableWidth) {
-  				this.xSpeed = 3;
-  				this.ySpeed = 0;
+  			// check if right player scores
+  			if (ballLeft < 0) {
+  				this.xSpeed = -3;
+  				this.ySpeed = 1;
   				this.x = tableWidth / 2;
   				this.y = tableHeight / 2;
+          $rootScope.$broadcast('score-right');
   			}
+        // check if left player / computer scores
+        if (ballRight > tableWidth) {
+          this.xSpeed = 3;
+          this.ySpeed = 1;
+          this.x = tableWidth / 2;
+          this.y = tableHeight / 2;
+          $rootScope.$broadcast('score-left');
+        }
 
   			// check if left paddle was hit
   			else if (ballLeft < leftPaddleFace && this.y > leftPaddleTop && this.y < leftPaddleBottom) {
@@ -177,7 +186,7 @@ angular.module('blocPongApp')
 
   		var player = new Player();
   		var computer = new Computer();
-  		var ball = new Ball(300, 200);
+  		var ball = new Ball(300, 175);
   		var keysDown = {};
 
   		window.addEventListener('keydown', function(event) {
@@ -220,4 +229,4 @@ angular.module('blocPongApp')
 	    	}
 	    };
 	  }
-  );
+  ]);

@@ -1,11 +1,11 @@
 <div class='container game-area'>
   <div class='row game-header text-center'>
-  	<span class='score-left pull-left game-title'>0</span>
+  	<span class='score-left pull-left game-title' data-ng-click='score.left = score.left + 1'>{{ score.left }}</span>
   	<span class='game-controls'>
   	<a href="#/menu">Quit</a>
   	<a href="#">Pause</a>
   	<span>
-  	<span class='score-right pull-right game-title'>0</span>
+  	<span class='score-right pull-right game-title' data-ng-click='score.right = score.right + 1'>{{ score.right }}</span>
   </div>
   <div class='row play game-body'>
     <canvas data-pong-table='' class='pong-table' width='600', height='350'></canvas>

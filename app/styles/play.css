@@ -4,10 +4,14 @@
 
 .score-left {
 	margin-left: 15px;
+	width: 100px;
+	text-align: left;
 }
 
 .score-right {
 	margin-right: 10px;
+	width: 100px;
+	text-align: right;
 }
 
 .game-controls {
