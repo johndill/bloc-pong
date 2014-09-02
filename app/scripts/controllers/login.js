@@ -6,7 +6,7 @@ angular.module('blocPongApp')
   .controller('LoginCtrl', ['$scope', 'simpleLogin', '$location', 'firebaseUrl', '$rootScope',
 		function ($scope, simpleLogin, $location, firebaseUrl, $rootScope) {
 
-			$scope.loginError = '';
+			$scope.loginError = false;
 	  	$rootScope.ref = new Firebase(firebaseUrl);
 
 			// sign up
@@ -38,7 +38,7 @@ angular.module('blocPongApp')
 				.then(
 					function(user) {
 						console.log(user);
-						$scope.loginError = '';
+						$scope.loginError = false;
 						$rootScope.ref.child('users').child(user.uid).child('settings').on('value', function (snapshot) {
 							$rootScope.settings = snapshot.val();
 							console.log(snapshot.val());
