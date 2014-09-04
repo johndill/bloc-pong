@@ -2,6 +2,7 @@
 @import url("../styles/menu.css");
 @import url("../styles/about.css");
 @import url("../styles/settings.css");
+@import url("../styles/play.css");
 
 @font-face {
     font-family: 'console85';
@@ -55,6 +56,7 @@ body {
 
 .btn-default {
   border: none;
+  border-radius: 0;
   font-size: 20px;
   line-height: 20px;
   padding: 15px 10px 10px 10px;

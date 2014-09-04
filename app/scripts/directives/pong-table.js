@@ -1,12 +1,32 @@
 'use strict';
 
 angular.module('blocPongApp')
-  .directive('pongTable',
-  	function () {
+  .directive('pongTable', ['$rootScope',
+  	function ($rootScope) {
   		var animate = window.requestAnimationFrame ||
   			window.webkitRequestAnimationFrame ||
   			window.mosRequestAnimationFrame ||
   			function (callback) { window.setTimeout(callback, 1000/60); };
+
+      var leftSound = new Audio('/sounds/left.wav'), 
+        rightSound = new Audio('/sounds/right.wav'), 
+        winSound = new Audio('/sounds/win.wav'), 
+        loseSound = new Audio('/sounds/lose.wav'),
+        collideSound = new Audio('/sounds/collide.wav');
+      
+      $rootScope.paused = false;
+
+      $rootScope.$on('toggle-play-pause', function() {
+        $rootScope.paused = !$rootScope.paused;
+      });
+
+      $rootScope.$on('game-over-lose', function() {
+        if ($rootScope.settings.sound === 'on') { loseSound.play(); }
+      });
+
+      $rootScope.$on('game-over-win', function() {
+        if ($rootScope.settings.sound === 'on') { winSound.play(); }
+      });
 
   		// paddle
   		function Paddle(x, y, width, height) {
@@ -49,7 +69,7 @@ angular.module('blocPongApp')
 
   		// player
   		function Player() {
-  			this.paddle = new Paddle(580, 175, 10, 50);
+  			this.paddle = new Paddle(580, 150, 10, 50);
   		}
 
   		Player.prototype.render = function(context) {
@@ -80,31 +100,31 @@ angular.module('blocPongApp')
 
   		// computer
   		function Computer() {
-  			this.paddle = new Paddle(10, 175, 10, 50);
+  			this.paddle = new Paddle(10, 150, 10, 50);
   		}
 
   		Computer.prototype.render = function(context) {
   			this.paddle.render(context);
   		};
 
-  		Computer.prototype.update = function(ball) {
+  		Computer.prototype.update = function(ball, tableHeight) {
   			var paddleCenter = this.paddle.y + (this.paddle.height / 2),
   				diff = ball.y - paddleCenter,
   				speed;
 
   			// set speed
   			if (diff < -3) {
-  				speed = -4;  // max speed up
+  				speed = -3;  // max speed up
   			}
   			else if (diff > 3) {
-  				speed = 4;	// max speed down
+  				speed = 3;	// max speed down
   			}
   			else {
   				speed = diff;  // move faster if farthur away
   			}
 
   			// move paddle
-  			this.paddle.move(0, speed);
+  			this.paddle.move(0, speed, tableHeight);
   		};
 
   		// ball
@@ -143,27 +163,41 @@ angular.module('blocPongApp')
   			if (ballTop < 0) {
   				this.y = this.radius;
   				this.ySpeed = -this.ySpeed;
+          if ($rootScope.settings.sound === 'on') { collideSound.play(); }
   			}
 
   			// check if hitting bottom
   			if (ballBottom > tableHeight) {
   				this.y = tableHeight - this.radius;
   				this.ySpeed = -this.ySpeed;
+          if ($rootScope.settings.sound === 'on') { collideSound.play(); }
   			}
 
-  			// check if hitting left or right wall (point scored)
-  			if (ballLeft < 0 || ballRight > tableWidth) {
-  				this.xSpeed = 3;
-  				this.ySpeed = 0;
+  			// check if right player scores
+  			if (ballLeft < 0) {
+  				this.xSpeed = -3;
+  				this.ySpeed = 1;
   				this.x = tableWidth / 2;
   				this.y = tableHeight / 2;
+          if ($rootScope.settings.sound === 'on') { collideSound.play(); }
+          $rootScope.$broadcast('score-right');
   			}
+        // check if left player / computer scores
+        if (ballRight > tableWidth) {
+          this.xSpeed = 3;
+          this.ySpeed = 1;
+          this.x = tableWidth / 2;
+          this.y = tableHeight / 2;
+          if ($rootScope.settings.sound === 'on') { collideSound.play(); }
+          $rootScope.$broadcast('score-left');
+        }
 
   			// check if left paddle was hit
   			else if (ballLeft < leftPaddleFace && this.y > leftPaddleTop && this.y < leftPaddleBottom) {
   				this.xSpeed = 3;
   				this.ySpeed += (leftPaddle.ySpeed / 4);
   				this.x += this.xSpeed;
+          if ($rootScope.settings.sound === 'on') { leftSound.play(); }
   			}
 
   			// check if right paddle was hit
@@ -171,13 +205,14 @@ angular.module('blocPongApp')
   				this.xSpeed = -3;
   				this.ySpeed += (rightPaddle.ySpeed / 4);
   				this.x += this.xSpeed;
+          if ($rootScope.settings.sound === 'on') { rightSound.play(); }
   			}
 
   		};
 
   		var player = new Player();
   		var computer = new Computer();
-  		var ball = new Ball(300, 200);
+  		var ball = new Ball(300, 175);
   		var keysDown = {};
 
   		window.addEventListener('keydown', function(event) {
@@ -196,14 +231,16 @@ angular.module('blocPongApp')
 	    			height = element.prop('height');
 	    		 
 	    		var step = function() {
-	    			update();
-	    			render();
-	    			animate(step);
+            if (!$rootScope.paused) {
+  	    			update();
+  	    			render();
+            }
+  	    		animate(step);
 	    		};
 
 	    		var update = function() {
 	    			player.update(height);
-	    			computer.update(ball);
+	    			computer.update(ball, height);
 	    			ball.update(computer.paddle, player.paddle, width, height);
 	    		};
 
@@ -220,4 +257,4 @@ angular.module('blocPongApp')
 	    	}
 	    };
 	  }
-  );
+  ]);

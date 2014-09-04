@@ -2,11 +2,11 @@
     <div class='row game-header text-center'>
         <span class='game-title'>BLOC PONG</span>
     </div>
-    <div class='row' data-ng-show='loginError!==""' data-ng-click='loginError=""'>
+    <div class='row' data-ng-show='loginError' data-ng-click='loginError=false'>
       <p class='login-message'>{{ loginError }}</p>
     </div>
     <div class='row game-body'>
-      <form class="form-signin" data-ng-submit="login()">
+      <form class="form-signin">
         <label for="username">EMAIL</label>
         <input type="email" class="form-control" name="username" placeholder="email" required="" autofocus="" data-ng-model="email" />
         <br />

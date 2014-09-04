@@ -6,11 +6,12 @@ angular.module('blocPongApp')
   .controller('LoginCtrl', ['$scope', 'simpleLogin', '$location', 'firebaseUrl', '$rootScope',
 		function ($scope, simpleLogin, $location, firebaseUrl, $rootScope) {
 
-			$scope.loginError = '';
+		$scope.loginError = false;
 	  	$rootScope.ref = new Firebase(firebaseUrl);
 
 			// sign up
 			$scope.signup = function() {
+				console.log('signup');
 				simpleLogin.$createUser($scope.email, $scope.password)
 					.then(function(user) {
 						$rootScope.ref.child('users').child(user.uid).set({
@@ -19,7 +20,6 @@ angular.module('blocPongApp')
 							difficulty: 'novice'
 						  }
 						});
-						$scope.loginError = '';
 						$scope.login();
 					}, function(error) {
 						$scope.loginError = error.message.replace('FirebaseSimpleLogin: ','');
@@ -28,6 +28,7 @@ angular.module('blocPongApp')
 
 			// sign in
 			$scope.login = function() {
+				console.log('login');
 				simpleLogin.$login('password', {
 					email: $scope.email, 
 					password: $scope.password
@@ -35,23 +36,21 @@ angular.module('blocPongApp')
 				.then(
 					function(user) {
 						console.log(user);
-						$scope.loginError = '';
+						$scope.loginError = false;
 						$rootScope.ref.child('users').child(user.uid).child('settings').on('value', function (snapshot) {
 							$rootScope.settings = snapshot.val();
 							console.log(snapshot.val());
-							$location.path('menu');
 						}, function (err) {
 							console.log('Error retrieving settings: '  + err.code + ' - ' + err.message);
-        			$rootScope.settings = { sound: 'on', difficulty: 'novice' };
-						});
+        					$rootScope.settings = { sound: 'on', difficulty: 'novice' };
+						});						
+						$location.path('menu');
 					}, 
 					function(error) {
 						$scope.loginError = error.message.replace('FirebaseSimpleLogin: ','');
 						console.log(error);
-					}
-				);
-			};
-
+					});
+	  	};
 	  }
   ]);
 
