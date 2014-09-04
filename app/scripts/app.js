@@ -49,7 +49,7 @@ angular
       });
   }])
   .config(['$locationProvider', function ($locationProvider) {
-    $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode(false);
   }])
   .run(['$rootScope', '$location', 'simpleLogin', function ($rootScope, $location, simpleLogin) {
     $rootScope.$on('$routeChangeStart', function() {
