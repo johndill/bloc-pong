@@ -1,0 +1,28 @@
+ul.game-menu {
+	list-style-type: none;
+	font-size: 30px;
+	margin: 0;
+	padding: 0;
+}
+
+ul.game-menu li {
+	color: black;
+	margin: 10px;
+	padding-top: 17px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	cursor: pointer;
+}
+
+ul.game-menu li:hover {
+	color: white;
+	background-color: black;
+}
+
+a.fill-parent {
+	display: block;
+	height: 100%;
+	width: 100%;
+	text-decoration: none;
+}

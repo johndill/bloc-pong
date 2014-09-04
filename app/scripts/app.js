@@ -21,14 +21,39 @@ angular
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        templateUrl: 'views/menu.html',
+        controller: 'MenuCtrl'
       })
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
+      .when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl'
+      })
+      .when('/menu', {
+        templateUrl: 'views/menu.html',
+        controller: 'MenuCtrl'
+      })
+      .when('/play', {
+        templateUrl: 'views/play.html',
+        controller: 'PlayCtrl'
+      })
+			.when('/settings', {
+				templateUrl: 'views/settings.html',
+				controller: 'SettingsCtrl'
+			})
       .otherwise({
         redirectTo: '/'
       });
-  }]);
+  }])
+  .config(['$locationProvider', function ($locationProvider) {
+    $locationProvider.html5Mode(false);
+  }])
+  .run(['$rootScope', '$location', 'simpleLogin', function ($rootScope, $location, simpleLogin) {
+    $rootScope.$on('$routeChangeStart', function() {
+      if (!simpleLogin.user) { $location.path('login'); }
+    });
+  }])
+  .constant('firebaseUrl', 'https://dill-bloc-pong.firebaseio.com/');
