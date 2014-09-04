@@ -27,3 +27,31 @@
 	color: #fff;
 	text-decoration: none;
 }
+
+.game-over {
+	position: absolute;
+	background-color: white;
+	top: 135px;
+	left: 150px;
+	font-size: 40px;
+	padding-left: 60px;
+	padding-right: 45px;
+	padding-top: 40px;
+	padding-bottom: 32px
+}
+
+.game-over a {
+	color: #777;
+	background-color: black;
+	padding: 10px;
+	padding-bottom: 6px;
+}
+
+.game-over a:hover {
+	color: #fff;
+	text-decoration: none;
+}
+
+a {
+	cursor: pointer;
+}

@@ -1,9 +1,13 @@
 <div class='container game-area'>
+  <div class='game-over text-center' data-ng-show='gameOver'>
+    You {{ gameOver }}!
+  </div>
   <div class='row game-header text-center'>
   	<span class='score-left pull-left game-title' data-ng-click='score.left = score.left + 1'>{{ score.left }}</span>
   	<span class='game-controls'>
-  	<a href="#/menu">Quit</a>
-  	<a href="#">Pause</a>
+  	<a data-ng-click='gotoMenu()'>Menu</a>
+  	<a data-ng-click='togglePlayPause()' data-ng-show='!$parent.paused && !gameOver'>Pause</a>
+    <a data-ng-click='togglePlayPause()' data-ng-show='$parent.paused && !gameOver'>Play</a>
   	<span>
   	<span class='score-right pull-right game-title' data-ng-click='score.right = score.right + 1'>{{ score.right }}</span>
   </div>

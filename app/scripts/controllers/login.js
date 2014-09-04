@@ -6,7 +6,7 @@ angular.module('blocPongApp')
   .controller('LoginCtrl', ['$scope', 'simpleLogin', '$location', 'firebaseUrl', '$rootScope',
 		function ($scope, simpleLogin, $location, firebaseUrl, $rootScope) {
 
-			$scope.loginError = false;
+		$scope.loginError = false;
 	  	$rootScope.ref = new Firebase(firebaseUrl);
 
 			// sign up
@@ -20,11 +20,9 @@ angular.module('blocPongApp')
 							difficulty: 'novice'
 						  }
 						});
+						$scope.login();
 					}, function(error) {
 						$scope.loginError = error.message.replace('FirebaseSimpleLogin: ','');
-					})
-					.then(function() {
-						$scope.login();
 					});
 			};
 
